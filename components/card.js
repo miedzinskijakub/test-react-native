@@ -59,7 +59,7 @@ class Card extends React.Component {
 
 
             <View>
-              <Text style={textLeft}>Test, 10</Text>
+              <Text style={textLeft}>{Test}, 10</Text>
               <Text style={textRight}>1 Connection</Text>
             </View>
             </View>
