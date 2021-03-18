@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native';
-import Swiper, part from 'react-native-deck-swiper';
+import Swiper from 'react-native-deck-swiper';
 
 
 
@@ -19,7 +19,7 @@ class Card extends React.Component {
 
   
     componentDidMount() {
-      fetch("https://dog.ceo/api/breeds/image/random")
+      fetch("https://dog.ceo/api/breeds/image/")
         .then(res => res.json())
         .then(
           (result) => {
