@@ -19,7 +19,7 @@ class Card extends React.Component {
 
   
     componentDidMount() {
-      fetch("https://dog.ceo/api/breeds/image/")
+      fetch("https://dog.ceo/api/breeds/image/random")
         .then(res => res.json())
         .then(
           (result) => {
@@ -55,7 +55,7 @@ class Card extends React.Component {
           <View style={container}>
             <View style={card}>
            
-                <Image source={items} style={cardImage}/>
+                <Image source={{uri: items}} style={cardImage}/>
 
 
             <View>
@@ -91,7 +91,7 @@ class Card extends React.Component {
       position: 'absolute',
       left: 0,
       top: 0,
-      fontSize: '2rem'
+     
     },
 
     textRight:{
