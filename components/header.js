@@ -15,7 +15,7 @@ export default function Header() {
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        top: 0,
+        top: 60,
         left: 0,
         width: '100%',
       backgroundColor: '#fff',
@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     logo:{
-        marginTop: 10,
+      
+        
     }
 
   });
