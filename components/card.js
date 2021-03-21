@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
-
+import generateRandomAnimalName from 'random-animal-name-generator'
 
 
 
@@ -25,7 +25,8 @@ class Card extends React.Component {
           (result) => {
             this.setState({
               isLoaded: true,
-              items: result.message
+              items: [result.message],
+              
             });
 }
           ,
@@ -48,19 +49,36 @@ class Card extends React.Component {
       } else if (!isLoaded) {
         return <Text>Ładowanie...</Text>;
       } else {
-
+        let animalName = generateRandomAnimalName()
         const {container, card, cardImage, textLeft, textRight} = styles;
-
+        console.log(items)
         return (
           <View style={container}>
             <View style={card}>
            
+           <Swiper
+           cards={[{uri: items}]}
+           renderCard={(card) => {
+             return(
+               <View>
+                 <Image source={card}></Image>
+               </View>
+             )
+           }}
+           onSwiped={(cardIndex) => {console.log(cardIndex)}}
+           onSwipedAll={() => {console.log('onSwipedAll')}}
+           cardIndex={0}
+           backgroundColor={'#FFFFFF'}
+           stackSize={3}
+           >
+
+           </Swiper>
                 <Image source={{uri: items}} style={cardImage}/>
 
 
             <View>
-              <Text style={textLeft}>Test, 10</Text>
-              <Text style={textRight}>1 Connection</Text>
+              <Text style={textLeft}>{animalName}</Text>
+              <Text style={textRight}></Text>
             </View>
             </View>
           </View>
@@ -91,7 +109,7 @@ class Card extends React.Component {
       position: 'absolute',
       left: 0,
       top: 0,
-     
+     fontSize: '2rem',
     },
 
     textRight:{
