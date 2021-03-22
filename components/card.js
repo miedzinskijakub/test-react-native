@@ -6,131 +6,149 @@ import generateRandomAnimalName from 'random-animal-name-generator'
 
 
 class Card extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        error: null,
-        isLoaded: false,
-        items: [],
-        index: 0,
-        setIndex: 0,
-      };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      isLoaded: false,
+      items: '',
+      index: 0,
+      setIndex: 0,
+    };
+  }
 
-  
-    componentDidMount() {
-      fetch("https://dog.ceo/api/breeds/image/random")
-        .then(res => res.json())
-        .then(
-          (result) => {
-            this.setState({
-              isLoaded: true,
-              items: [result.message],
-              
-            });
-}
-          ,
-         
-          (error) => {
-            this.setState({
-              isLoaded: true,
-              error
-            });
+
+  request() {
+    fetch("https://dog.ceo/api/breeds/image/random")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            items: result.message,
+            
           }
-        )
-    }            //</View><Image style={styles.images} source={items}/>
-    
-    
+          
+          )
+          const tab = []
+          tab.push(this.state.items)
+          console.log(tab)
+        }
+        
+        ,
 
-    render() {
-      const { error, isLoaded, items,  } = this.state;
-      if (error) {
-        return <View>Błąd: {error.message}</View>;
-      } else if (!isLoaded) {
-        return <Text>Ładowanie...</Text>;
-      } else {
-        let animalName = generateRandomAnimalName()
-        const {container, card, cardImage, textLeft, textRight} = styles;
-        console.log(items)
-        return (
-          <View style={container}>
-            <View style={card}>
-           
-           <Swiper
-           cards={[{uri: items}]}
-           renderCard={(card) => {
-             return(
-               <View>
-                 <Image source={card}></Image>
-               </View>
-             )
-           }}
-           onSwiped={(cardIndex) => {console.log(cardIndex)}}
-           onSwipedAll={() => {console.log('onSwipedAll')}}
-           cardIndex={0}
-           backgroundColor={'#FFFFFF'}
-           stackSize={3}
-           >
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
 
-           </Swiper>
-                <Image source={{uri: items}} style={cardImage}/>
+  }            //</View><Image style={styles.images} source={items}/>
+
+  componentDidMount() {
+    this.request()
+  }
+
+  render() {
+    const { error, isLoaded, items, } = this.state;
+    const { container, card, cardImage, textLeft, textRight, images } = styles;
+
+    if (error) {
+      return <View>Błąd: {error.message}</View>;
+    } else if (!isLoaded) {
+      return <Text>Ładowanie...</Text>;
+    } else {
+      let animalName = generateRandomAnimalName()
+      console.log(items)
+
+      return (
+        <View style={container}>
+          <View style={card}>
+
+            <Swiper
+              cards={items}
+              renderCard={(card) => {
+                return (
+                  <View>
+                  <Image source={{ uri: items }} style={images} />
+                 
+                  </View>
+                )
+              }}
+              onSwiped={(cardIndex) => {
+                this.request()
+                
+                console.log(cardIndex)
+
+              }}
+              onSwipedAll={() => { console.log('onSwipedAll') }}
+              cardIndex={0}
+              backgroundColor={'#FFFFFF'}
+              stackSize={1}
+              showSecondCard	
+            >
+
+            </Swiper>
 
 
             <View>
               <Text style={textLeft}>{animalName}</Text>
               <Text style={textRight}></Text>
             </View>
-            </View>
           </View>
-        );
-      }
+        </View>
+      );
     }
   }
+}
 
-  const styles = StyleSheet.create({
-    container:{
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    card:{
-      width: 300,
-      height: 300,
-      padding: 10
+const styles = StyleSheet.create({
+  container: {
+    
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  card: {
+    width: 300,
+    height: 300,
+    padding: 10
 
-    },
+  },
 
-    cardImage:{
-      height: 260,
-      borderRadius: 30
-    },
+  cardImage: {
+    height: 260,
+    borderRadius: 30
+  },
 
-    textLeft:{
-      position: 'absolute',
-      left: 0,
-      top: 0,
-     fontSize: '2rem',
-    },
+  textLeft: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    fontSize: '2rem',
+  },
 
-    textRight:{
-      position: 'absolute',
-      right: 0,
-      top: 0,
-    },
+  textRight: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  },
 
-    image: {
-        width: '100%',
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    images: {
-        height: 400,
-        width: 300,
-        borderRadius: 30,
+  image: {
+    width: '100%',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  images: {
+    height: 400,
+    width: 300,
+    borderRadius: 30,
 
-    }
+  }
 
-  });
+});
 
-  export default Card
+export default Card
