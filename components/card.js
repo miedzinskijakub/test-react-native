@@ -12,8 +12,7 @@ class Card extends React.Component {
       error: null,
       isLoaded: false,
       items: '',
-      index: 0,
-      setIndex: 0,
+
     };
   }
 
